@@ -230,9 +230,8 @@ def main(vodID):
     os.system("echo " + nom_vid)
 
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    os.system("echo -------------------------------------------------")
-    os.system("echo Descarga de Fragmentos. Errores:")
-	os.system("mkdir ts")
+    os.system("echo ---------------Descarga de Fragmentos. Errores:")
+    os.system("mkdir ts")
     asyncio.run(realizarTareas(url_ts, lista_frag))
 
     os.system("echo -------------------------------------------------")
