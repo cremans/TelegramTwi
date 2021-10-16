@@ -270,3 +270,6 @@ def main(vodID):
               '.rar" "' + nom_vid + '.mp4"')
     os.system('winrar.exe a -afrar -df -m5 -mt3 -ri15 -t -tk -ts -v1.9g ".\\' + vodID + '\\' + nom_vid +
              '.rar" "' + nom_vid + '.mp4"')
+
+main("1119113583")
+main("1119109489")
