@@ -17,7 +17,7 @@ jobs:
         cmd /c md "C:\1Twitch"
     - name: Descarga Ejecut
       run: |
-        Invoke-WebRequest https://raw.githubusercontent.com/cremans/TelegramTwi/main/Telgram.py -OutFile "C:\1Twitch\Telgram.py"
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/TelegramTwi/main/Telgram_ts.py -OutFile "C:\1Twitch\Telgram_ts.py"
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/AutoTwi/main/WinRAR.exe -OutFile "C:\1Twitch\WinRAR.exe"
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/AutoTwi/main/ffmpeg.zip -OutFile "C:\1Twitch\ffmpeg.zip"
     - name: Descomprimir Conver Video
@@ -30,11 +30,12 @@ jobs:
     - name: Ejecutando Auto
       run: |
         cd "C:\1Twitch"
-        python Telgram.py
+        python Telgram_ts.py
     - name: Entorno erredepe. Descargar lo necesario
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/starts.bat -OutFile starts.bat
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
     - name: Extraer nmgrok.
@@ -57,5 +58,45 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        Invoke-WebRequest https://github.com/cremans/rgth/raw/main/lp.ps1 -OutFile lp.ps1
-        ./lp.ps1
+        $i = 49
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
+    - name: Matar Proceso.
+      run: TASKKILL /f /im ngrok.exe
+    - name: Conectando.
+      run: .\ngrok\ngrok.exe authtoken $Env:DOS_AUTH
+      env:
+        DOS_AUTH: ${{ secrets.DOS_AUTH }}
+    - name: Conectar con tunerl.
+      run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+    - name: Generando datos de conexion.
+      run: cmd /c starts.bat
+    - name: Proceso Benevolente
+      run: | 
+        $i = 49
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
+    - name: Matar Proceso.
+      run: TASKKILL /f /im ngrok.exe
+    - name: Conectando.
+      run: .\ngrok\ngrok.exe authtoken $Env:TRES_AUTH
+      env:
+        TRES_AUTH: ${{ secrets.TRES_AUTH }}
+    - name: Conectar con tunerl.
+      run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
+    - name: Generando datos de conexion.
+      run: cmd /c starts.bat
+    - name: Proceso Benevolente
+      run: | 
+        $i = 49
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
