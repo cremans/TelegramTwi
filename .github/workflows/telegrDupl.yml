@@ -33,6 +33,7 @@ jobs:
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/start.bat -OutFile start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/starts.bat -OutFile starts.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/cremans/TelegramTwi/main/revr_start.bat -OutFile revr_start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bmp -OutFile wallpaper.bmp
         Invoke-WebRequest https://raw.githubusercontent.com/cremans/rgth/main/wallpaper.bat -OutFile wallpaper.bat
     - name: Extraer nmgrok.
@@ -55,7 +56,7 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        $i = 10
+        $i = 7
         do {
           Write-Host $i
           Sleep 60
@@ -63,10 +64,20 @@ jobs:
         } while ($i -gt 0)
     - name: Matar Proceso.
       run: TASKKILL /f /im ngrok.exe
+    - name: Reverse.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 1
+        Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0
     - name: Proceso Benevolente
       run: | 
         Invoke-WebRequest https://github.com/cremans/TelegramTwi/raw/main/lp.ps1 -OutFile lp.ps1
         ./lp.ps1
+    - name: Reconfig.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - name: Conectando.
       run: .\ngrok\ngrok.exe authtoken $Env:DOS_AUTH
       env:
@@ -74,7 +85,7 @@ jobs:
     - name: Conectar con tunerl.
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
     - name: Generando datos de conexion.
-      run: cmd /c starts.bat
+      run: cmd /c revr_start.bat
     - name: Proceso Benevolente
       run: | 
         $i = 49
