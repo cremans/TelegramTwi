@@ -55,7 +55,7 @@ jobs:
       run: cmd /c start.bat
     - name: Proceso Benevolente
       run: | 
-        $i = 49
+        $i = 20
         do {
           Write-Host $i
           Sleep 60
@@ -63,28 +63,18 @@ jobs:
         } while ($i -gt 0)
     - name: Matar Proceso.
       run: TASKKILL /f /im ngrok.exe
+    - name: Proceso Benevolente
+      run: | 
+        $i = 240
+        do {
+          Write-Host $i
+          Sleep 60
+          $i--
+        } while ($i -gt 0)
     - name: Conectando.
       run: .\ngrok\ngrok.exe authtoken $Env:DOS_AUTH
       env:
         DOS_AUTH: ${{ secrets.DOS_AUTH }}
-    - name: Conectar con tunerl.
-      run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
-    - name: Generando datos de conexion.
-      run: cmd /c starts.bat
-    - name: Proceso Benevolente
-      run: | 
-        $i = 49
-        do {
-          Write-Host $i
-          Sleep 60
-          $i--
-        } while ($i -gt 0)
-    - name: Matar Proceso.
-      run: TASKKILL /f /im ngrok.exe
-    - name: Conectando.
-      run: .\ngrok\ngrok.exe authtoken $Env:TRES_AUTH
-      env:
-        TRES_AUTH: ${{ secrets.TRES_AUTH }}
     - name: Conectar con tunerl.
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
     - name: Generando datos de conexion.
